@@ -1,9 +1,16 @@
-/// <reference path="./kintone.d.ts" />
+/// <reference path='./kintone.d.ts'/>
+interface Event {
+  record: {
+    '文字列': {
+      value: string;
+    };
+  };
+}
 
 (function(){
-  kintone.events.on('app.record.index.show', (event) => {
-    kintone.api.getConcurrencyLimit().then(({limit, running}) => {
-      window.alert(`limit= ${limit} running=${running}`);
-    });
-  });
+  kintone.events.on('app.record.create.show', (event:Event) => {
+    let record = event.record;
+    record['文字列'].value = 'TypeScript';
+    return event;
+  })
 })();
